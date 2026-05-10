@@ -1,0 +1,14 @@
+.git
+.gitignore
+.DS_Store
+*.log
+*.exe
+*.out
+*.test
+
+bin/
+dist/
+build/
+
+internal/store/dumplings/mock/
+internal/store/dumplings/fake/
