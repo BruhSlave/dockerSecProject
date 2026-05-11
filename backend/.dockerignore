@@ -9,6 +9,3 @@
 bin/
 dist/
 build/
-
-internal/store/dumplings/mock/
-internal/store/dumplings/fake/
