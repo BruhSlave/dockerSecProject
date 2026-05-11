@@ -15,9 +15,7 @@ FROM nginx:1.28-alpine
 
 RUN apk add --no-cache curl 
 
-RUN rm -rf /usr/share/nginx/html/*
-
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /var/www/html/
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
