@@ -9,13 +9,7 @@ services:
 
   frontend:
     container_name: docker-sel-frontend
-    image: iezekiil/docker-sec-frontend:e2c44f0
-
-    build:
-      context: .
-      args:
-        VUE_APP_API_URL: http://backend:8081
-    
+    image: iezekiil/docker-sec-frontend:16e2396
     ports:
       - 80:80
     networks:
