@@ -1,19 +1,71 @@
 services:
   backend:
-    container_name: docker-sel-backend
     image: iezekiil/docker-sec-backend:e2c44f0
-    ports:
-      - 8081:8081
+    volumes:
+      - backend_data:/app/data
+    
+    expose:
+      - "8081"
     networks:
-      - app
+      - backend_net
+      - internal_net
+
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8081/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
 
   frontend:
-    container_name: docker-sel-frontend
     image: iezekiil/docker-sec-frontend:16e2396
+    volumes:
+      - frontend_data:/usr/share/nginx/html/uploads
+    
     ports:
       - 80:80
     networks:
-      - app
+      - frontend_net
+      - backend_net
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:80/momo-store/catalog"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 256M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+    depends_on:
+      - backend
 
 networks:
-  app:
+  frontend_net:
+  backend_net:
+  internal_net:
+    internal: true
+
+volumes:
+  backend_data:
+  frontend_data:
