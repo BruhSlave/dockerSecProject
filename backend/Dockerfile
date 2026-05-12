@@ -19,12 +19,13 @@ RUN apk add --no-cache curl
 
 COPY --from=builder /app/dockerSecApp .
 
-RUN adduser -D dockeruser
-RUN chown dockeruser:dockeruser /app/dockerSecApp
+RUN adduser -D dockeruser && mkdir -p /app/data && chown -R dockeruser:dockeruser /app
 USER dockeruser
+
+
 
 EXPOSE 8081
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD curl -f http://localhost:8081/metrics
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD curl -f http://localhost:8081/healh
 
 CMD ["./dockerSecApp"]
