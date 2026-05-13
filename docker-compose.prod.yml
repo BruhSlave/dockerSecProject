@@ -1,8 +1,17 @@
 services:
   backend:
-    image: ${DOCKER_USER}/docker-sec-backend-prod:latest 
+    image: ${DOCKER_USER}/docker-sec-backend-prod:latest
+    read_only: true
     volumes:
       - backend_data:/app/data
+    tmpfs:
+      - /tmp
+      - /run
+
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
     
     expose:
       - "8081"
@@ -30,8 +39,20 @@ services:
 
   frontend:
     image: ${DOCKER_USER}/docker-sec-frontend-prod:latest 
+    read_only: true
     volumes:
       - frontend_data:/usr/share/nginx/html/uploads
+    tmpfs:
+      - /tmp
+      - /var/cache/nginx
+      - /var/run
+
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    security_opt:
+      - no-new-privileges:true
     
     ports:
       - 80:80
