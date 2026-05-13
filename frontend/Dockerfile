@@ -9,7 +9,6 @@ RUN npm ci
 COPY . .
 
 ARG VUE_APP_API_URL
-# ENV VUE_APP_API_URL=${VUE_APP_API_URL}
 
 RUN npm run build
 
@@ -17,6 +16,7 @@ RUN npm run build
 
 FROM nginx:1.28-alpine
 
+RUN apk upgrade
 RUN apk add --no-cache curl
 
 COPY --from=builder /app/dist/ /usr/share/nginx/html/

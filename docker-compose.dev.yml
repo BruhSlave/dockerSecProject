@@ -1,6 +1,6 @@
 services:
   backend:
-    image: iezekiil/docker-sec-backend-dev:8099635 
+    image: iezekiil/docker-sec-backend-dev:a8778b7 
     volumes:
       - backend_data:/app/data
     
@@ -29,7 +29,7 @@ services:
           memory: 256M
 
   frontend:
-    image: iezekiil/docker-sec-frontend-dev:8099635
+    image: iezekiil/docker-sec-frontend-dev:a8778b7
     volumes:
       - frontend_data:/usr/share/nginx/html/uploads
     

@@ -15,6 +15,7 @@ FROM alpine:3.21
 
 WORKDIR /app
 
+RUN apk upgrade
 RUN apk add --no-cache curl 
 
 COPY --from=builder /app/dockerSecApp .
