@@ -72,6 +72,22 @@ services:
     networks:
       - backend_net
 
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: docker-sec-cadvisor
+    restart: unless-stopped
+    ports:
+      - "8085:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - backend_net
+
+
+
 networks:
   frontend_net:
   backend_net:
