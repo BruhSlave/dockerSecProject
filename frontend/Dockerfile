@@ -16,8 +16,7 @@ RUN npm run build
 
 FROM nginx:1.28-alpine
 
-RUN apk upgrade
-RUN apk add --no-cache curl
+RUN apk upgrade --no-cache && apk add --no-cache curl 
 
 COPY --from=builder /app/dist/ /usr/share/nginx/html/
 

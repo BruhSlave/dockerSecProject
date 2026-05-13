@@ -1,4 +1,4 @@
-FROM golang:1.24-alpine AS builder
+FROM golang:1.24.12-alpine AS builder
 
 WORKDIR /app
 
@@ -15,8 +15,7 @@ FROM alpine:3.21
 
 WORKDIR /app
 
-RUN apk upgrade
-RUN apk add --no-cache curl 
+RUN apk upgrade --no-cache && apk add --no-cache curl 
 
 COPY --from=builder /app/dockerSecApp .
 
@@ -27,6 +26,6 @@ USER dockeruser
 
 EXPOSE 8081
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD curl -f http://localhost:8081/healh
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD curl -f http://localhost:8081/health
 
 CMD ["./dockerSecApp"]
